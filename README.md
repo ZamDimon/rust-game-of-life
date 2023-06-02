@@ -1,2 +1,2 @@
-# rust-game-of-life
-Project for learning a Rust programming language and Bevy
+# Game of Life in Rust
+Project for learning a _Rust_ programming language and Bevy.
