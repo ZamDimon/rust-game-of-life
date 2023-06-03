@@ -5,6 +5,7 @@ use bevy::prelude::{Color};
 #[derive(Debug, Deserialize, Clone)]
 pub struct Settings {
     pub default_window_settings: DefaultWindowSettings,
+    pub field_settings: FieldSettings,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -13,6 +14,11 @@ pub struct DefaultWindowSettings {
     pub width: f32,
     pub height: f32,
     pub clear_color: Color,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct FieldSettings {
+    pub block_size: f32,
 }
 
 const CONFIG_FILE_PATH: &str = "./config/Default.toml";
@@ -28,7 +34,7 @@ impl Settings {
         config.merge(File::with_name(CONFIG_FILE_PATH))?;
         config.merge(File::with_name(&format!("{}{}", CONFIG_FILE_PREFIX, env)))?;
         
-        // Try unmarshalling into the raw structures first
+        // Try putting into the raw structures first
         let raw_settings: RawSettings = config.try_into()?;
         Ok(Settings::from(raw_settings))
     }
@@ -37,16 +43,17 @@ impl Settings {
 // --- Raw types below ---
 
 #[derive(Debug, Deserialize, Clone)]
+struct RawSettings {
+    default_window_settings: RawDefaultWindowSettings,
+    field_settings: FieldSettings,
+}
+
+#[derive(Debug, Deserialize, Clone)]
 struct RawDefaultWindowSettings {
     pub name: String,
     pub width: f32,
     pub height: f32,
     pub clear_color: (f32, f32, f32),
-}
-
-#[derive(Debug, Deserialize, Clone)]
-struct RawSettings {
-    default_window_settings: RawDefaultWindowSettings,
 }
 
 impl From<RawDefaultWindowSettings> for DefaultWindowSettings {
@@ -65,6 +72,7 @@ impl From<RawSettings> for Settings {
     fn from(raw_settings: RawSettings) -> Self {
         Settings { 
             default_window_settings: DefaultWindowSettings::from(raw_settings.default_window_settings),
+            field_settings: raw_settings.field_settings,
         }
     }
 }
