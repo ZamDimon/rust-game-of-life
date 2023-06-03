@@ -1,0 +1,5 @@
+[default_window_settings]
+name = "Game of life"
+width = 1020.0
+height = 720.0
+clear_color=[0.9, 0.3, 0.6]
