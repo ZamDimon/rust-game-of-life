@@ -2,9 +2,9 @@
 name = "Game of life"
 width = 700.0
 height = 700.0
-clear_color=[1.0, 1.0, 1.0]
+clear_color=[0.9, 0.9, 0.9]
 
 [field_settings]
 block_size=20.0
-alive_cell_color=[0.7, 0.5, 0.2]
+alive_cell_color=[0.4, 0.4, 1.0]
 updating_frequency=150 # In milliseconds
